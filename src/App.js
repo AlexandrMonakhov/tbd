@@ -1,9 +1,7 @@
 import './App.scss';
+import { TabsContainer, FormInstructor, FormStudent, FormTransport } from './components'
 
-import { Container } from 'react-bootstrap';
-
-import { TabsContainer, FormInstructor, FormStudent, TableContainer } from './components'
-
+import { Container } from 'reactstrap'
 
 function App() {
   return (
@@ -13,9 +11,9 @@ function App() {
           <h1 className="title text-center">База данных "Автошкола"</h1>
           <Container>
             <TabsContainer />
-            <TableContainer />
-            <FormInstructor />
-            <FormStudent />
+            {/* <FormInstructor />
+            <FormTransport />
+            <FormStudent /> */}
           </Container>
         </Container>
       </header>

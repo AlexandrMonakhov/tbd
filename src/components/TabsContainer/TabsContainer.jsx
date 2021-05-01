@@ -1,16 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Tabs, Tab } from "react-bootstrap";
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Col,
+} from "reactstrap";
 
-import tabs from "../../data/tabHeaders";
+import TableContainer from "../Table/TableContainer";
 
-function TabsContainer() {
+function TabsContainer(props) {
+  const [activeTab, setActiveTab] = useState("1");
+
+  const toggle = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
+  };
+
   return (
-    <Tabs defaultActiveKey="autoschool" id="tabs">
-      {tabs.map((tab) => (
-        <Tab eventKey={tab.eventKey} title={tab.title} key={tab.id}></Tab>
-      ))}
-    </Tabs>
+    <div>
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={activeTab === "1" ? "active" : ""}
+            onClick={() => {
+              toggle("1");
+            }}
+          >
+            Tab1
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={activeTab === "2" ? "active" : ""}
+            onClick={() => {
+              toggle("2");
+            }}
+          >
+            Tab2
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">hui</TabPane>
+        <TabPane tabId="2">
+          <TableContainer />
+        </TabPane>
+      </TabContent>
+    </div>
   );
 }
 
