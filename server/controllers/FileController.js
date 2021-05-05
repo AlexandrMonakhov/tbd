@@ -5,7 +5,7 @@ class FileController {
   async getAllFiles(req, res) {
     try {
       const files = await FileCab.find();
-      return res.json({ files });
+      return res.json({ data: files });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении картотеки' })
     }
@@ -35,6 +35,22 @@ class FileController {
     }
 
   }
+
+  async deleteFile(req, res) {
+    try {
+      const _id = req.body.id;
+      FileCab.findByIdAndDelete({ _id }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось удалить картотекe' })
+        }
+        return res.json(`Картотека c номером ${document.fileNumber} была удалена`)
+      });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при удалении картотеки' });
+    }
+  }
+
+
 
 }
 

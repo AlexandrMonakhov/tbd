@@ -5,7 +5,17 @@ class ContractController {
   async getAllContracts(req, res) {
     try {
       const contracts = await Contract.find();
-      return res.json({ contracts });
+      return res.json({ data: contracts });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при получении договоров' });
+    }
+  }
+
+  async getOneContract(req, res) {
+    try {
+      const { id: _id } = req.params;
+      const contract = await Contract.findOne({ _id });
+      return res.json({ data: contract });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении договора' });
     }
@@ -37,7 +47,7 @@ class ContractController {
 
   async deleteContract(req, res) {
     try {
-      const _id = req.body.id;
+      const _id = req.params.id;
       Contract.findByIdAndDelete({ _id }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось удалить договор' })
@@ -52,6 +62,12 @@ class ContractController {
   async updateContract(req, res) {
     try {
       const contract = req.body;
+
+      const isExists = await Contract.exists({ contractNumber: contract.contractNumber });
+
+      if (isExists) {
+        return res.status(400).json({ message: 'Договор с таким номером уже существует' });
+      }
 
       Contract.findByIdAndUpdate({ _id: contract._id }, contract, { new: true }, (error, document) => {
         if (error) {

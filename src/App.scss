@@ -16,6 +16,43 @@ body {
 
 .table {
   & thead th {
+    vertical-align: middle;
+    text-align: center;
     font-size: 14px;
   }
+
+  & td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+.view {
+  &-box {
+    margin: 20px 0px 50px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & svg {
+      color: green;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.nav-item {
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit {
+  margin-right: 5px;
 }

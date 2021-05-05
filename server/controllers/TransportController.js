@@ -4,7 +4,7 @@ class TransportController {
   async getAllTransports(req, res) {
     try {
       const transports = await Transport.find(); // найти все модели
-      return res.json({ transports }); // => res.data.transports
+      return res.json({ data: transports }); // => res.data.transports
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении транспорта' });
     }

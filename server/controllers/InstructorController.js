@@ -5,7 +5,7 @@ class InstructorController {
 
     try {
       const instructors = await Instructor.find(); // найти всех модели инструкторов
-      return res.json({ instructors }); // => res.data.instructors
+      return res.json({ data: instructors }); // => res.data.instructors
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении инструкторов' });
     }

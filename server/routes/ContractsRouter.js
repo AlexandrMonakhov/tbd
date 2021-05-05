@@ -5,10 +5,12 @@ const ContractRouter = new Router();
 
 ContractRouter.get('/getAll', ContractController.getAllContracts);
 
+ContractRouter.get('/:id', ContractController.getOneContract);
+
 ContractRouter.post('/add', ContractController.addContract);
 
-ContractRouter.delete('/delete', ContractController.deleteContract);
+ContractRouter.delete('/:id', ContractController.deleteContract);
 
-ContractRouter.put('/update', ContractController.updateContract);
+ContractRouter.put('/', ContractController.updateContract);
 
 module.exports = ContractRouter;

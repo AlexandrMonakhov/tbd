@@ -6,7 +6,7 @@ class QuestionnaireController {
 
     try {
       const questionnaires = await Questionnaire.find();
-      return res.json({ questionnaires });
+      return res.json({ data: questionnaires });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении анкет' });
     }

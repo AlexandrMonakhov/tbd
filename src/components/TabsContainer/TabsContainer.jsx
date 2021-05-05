@@ -1,54 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  Col,
-} from "reactstrap";
+import { Nav, NavItem } from "reactstrap";
 
-import TableContainer from "../Table/TableContainer";
-
-function TabsContainer(props) {
-  const [activeTab, setActiveTab] = useState("1");
-
-  const toggle = (tab) => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
-
+function TabsContainer() {
   return (
     <div>
-      <Nav tabs>
+      <Nav>
         <NavItem>
-          <NavLink
-            className={activeTab === "1" ? "active" : ""}
-            onClick={() => {
-              toggle("1");
-            }}
-          >
-            Tab1
-          </NavLink>
+          <NavLink to={"/contracts"}>Договоры</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink
-            className={activeTab === "2" ? "active" : ""}
-            onClick={() => {
-              toggle("2");
-            }}
-          >
-            Tab2
-          </NavLink>
+          <NavLink to={"/instructors"}>Инструкторы</NavLink>
         </NavItem>
       </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">hui</TabPane>
-        <TabPane tabId="2">
-          <TableContainer />
-        </TabPane>
-      </TabContent>
     </div>
   );
 }

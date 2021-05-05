@@ -6,7 +6,7 @@ class StudentController {
 
     try {
       const students = await Student.find();
-      return res.json({ students });
+      return res.json({ data: students });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении студента' });
     }

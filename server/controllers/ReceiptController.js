@@ -5,7 +5,7 @@ class ReceiptController {
   async getAllReceipts(req, res) {
     try {
       const receipts = await Receipt.find();
-      return res.json({ receipts });
+      return res.json({ data: receipts });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при получении квитанции' });
     }
