@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TableContainer } from "../../components";
-import { getStudents } from "../../services/connections";
+import { getStudents, deleteStudent } from "../../services/connections";
 import translates from "../../translate";
 
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -34,6 +34,22 @@ const Students = () => {
       });
   };
 
+  const tryToDelete = (id = false) => {
+    if (!id) {
+      return;
+    }
+
+    deleteStudent(id)
+      .then((response) => {
+        alert(response.data);
+        load();
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  };
+
   useEffect(() => {
     load();
   }, []);
@@ -50,6 +66,7 @@ const Students = () => {
         data={data}
         translate={translates.student}
         headers={headers}
+        deleteAction={tryToDelete}
       />
     </div>
   );

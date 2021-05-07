@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { TableContainer } from "../../components";
-import { getQuestionnaires } from "../../services/connections";
+import {
+  getQuestionnaires,
+  deleteQuestionnaire,
+} from "../../services/connections";
 import translates from "../../translate";
 
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -34,6 +37,22 @@ const Questionnaire = () => {
       });
   };
 
+  const tryToDelete = (id = false) => {
+    if (!id) {
+      return;
+    }
+
+    deleteQuestionnaire(id)
+      .then((response) => {
+        alert(response.data);
+        load();
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  };
+
   useEffect(() => {
     load();
   }, []);
@@ -50,6 +69,7 @@ const Questionnaire = () => {
         data={data}
         translate={translates.questionnaire}
         headers={headers}
+        deleteAction={tryToDelete}
       />
     </div>
   );

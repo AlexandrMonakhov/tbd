@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TableContainer } from "../../components";
-import { getReceipts } from "../../services/connections";
+import { getReceipts, deleteReceipt } from "../../services/connections";
 import translates from "../../translate";
 
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -34,6 +34,22 @@ const Receipt = () => {
       });
   };
 
+  const tryToDelete = (id = false) => {
+    if (!id) {
+      return;
+    }
+
+    deleteReceipt(id)
+      .then((response) => {
+        alert(response.data);
+        load();
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  };
+
   useEffect(() => {
     load();
   }, []);
@@ -50,6 +66,7 @@ const Receipt = () => {
         data={data}
         translate={translates.receipt}
         headers={headers}
+        deleteAction={tryToDelete}
       />
     </div>
   );

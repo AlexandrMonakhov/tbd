@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TableContainer } from "../../components";
-import { getTransports } from "../../services/connections";
+import { deleteTransport, getTransports } from "../../services/connections";
 import translates from "../../translate";
 
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -34,6 +34,22 @@ const Transport = () => {
       });
   };
 
+  const tryToDelete = (id = false) => {
+    if (!id) {
+      return;
+    }
+
+    deleteTransport(id)
+      .then((response) => {
+        alert(response.data);
+        load();
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  };
+
   useEffect(() => {
     load();
   }, []);
@@ -50,6 +66,7 @@ const Transport = () => {
         data={data}
         translate={translates.transport}
         headers={headers}
+        deleteAction={tryToDelete}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TableContainer } from "../../components";
-import { getFiles } from "../../services/connections";
+import { getFiles, deleteFile } from "../../services/connections";
 import translates from "../../translate";
 
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -34,6 +34,22 @@ const FileCab = () => {
       });
   };
 
+  const tryToDelete = (id = false) => {
+    if (!id) {
+      return;
+    }
+
+    deleteFile(id)
+      .then((response) => {
+        alert(response.data);
+        load();
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  };
+
   useEffect(() => {
     load();
   }, []);
@@ -50,6 +66,7 @@ const FileCab = () => {
         data={data}
         translate={translates.files}
         headers={headers}
+        deleteAction={tryToDelete}
       />
     </div>
   );
