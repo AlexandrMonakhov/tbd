@@ -18,7 +18,9 @@ const ActionCell = ({ deleteAction, id }) => {
         <Button
           color="danger"
           className="delete"
-          onClick={() => deleteAction(id)}
+          onClick={() => {
+            deleteAction(id);
+          }}
         >
           <AiFillDelete />
         </Button>

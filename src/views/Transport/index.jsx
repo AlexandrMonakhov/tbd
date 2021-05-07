@@ -41,7 +41,7 @@ const Transport = () => {
   return (
     <div>
       <div className="view-box">
-        <h1>Таблица "Студенты"</h1>
+        <h1>Таблица "Транспорт"</h1>
         <Link to={"/transports/add"}>
           <AiFillPlusSquare />
         </Link>
