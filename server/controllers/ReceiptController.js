@@ -11,6 +11,16 @@ class ReceiptController {
     }
   }
 
+  async getOneReceipt(req, res) {
+    try {
+      const { id: _id } = req.params;
+      const receipt = await Receipt.findOne({ _id });
+      return res.json({ data: receipt });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при получении квитанции' });
+    }
+  }
+
   async addReceipt(req, res) {
     try {
       const { receiptNumber, studentNumber, paymentDate, sum } = req.body;
@@ -38,7 +48,7 @@ class ReceiptController {
   async deleteReceipt(req, res) {
 
     try {
-      const _id = req.body.id;
+      const _id = req.params.id;
       Receipt.findByIdAndDelete({ _id }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось удалить квитанцию' });
@@ -50,6 +60,28 @@ class ReceiptController {
       return res.status(400).json({ message: 'Ошибка при удалении квитанции' });
     }
 
+  }
+
+  async updateReceipt(req, res) {
+    try {
+      const receipt = req.body;
+
+      const isExists = await Receipt.exists({ receiptNumber: receipt.receiptNumber });
+
+      if (isExists) {
+        return res.status(400).json({ message: 'Квитанция с таким номером уже существует' });
+      }
+
+      Receipt.findByIdAndUpdate({ _id: receipt._id }, receipt, { new: true }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось обновить квитанцию' })
+        }
+        return res.json(`Квитанция c номером ${document.receiptNumber} был обновлен`)
+      });
+
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при обновлении квитанции' })
+    }
   }
 
 }

@@ -5,6 +5,11 @@ import { TabsContainer, FormContracts } from './components';
 import { Container } from 'reactstrap';
 import Instructors from './views/Instructors';
 import Contracts from './views/Contracts';
+import FileCab from './views/FileCab';
+import Questionnaire from './views/Questionnaire';
+import Receipt from './views/Receipt';
+import Students from './views/Students';
+import Transport from './views/Transport';
 
 function App() {
   return (
@@ -16,9 +21,20 @@ function App() {
             <Container>
               <TabsContainer />
               <Switch>
-                <Route path={"/instructors"} component={Instructors} />
+                <Route exact path={"/instructors"} component={Instructors} />
+
                 <Route exact path={"/contracts"} component={Contracts} />
                 <Route path={"/contracts/add/:id?"} component={FormContracts} />
+
+                <Route exact path={"/files"} component={FileCab} />
+
+                <Route exact path={"/questionnaires"} component={Questionnaire} />
+
+                <Route exact path={"/receipts"} component={Receipt} />
+
+                <Route exact path={"/students"} component={Students} />
+
+                <Route exact path={"/transports"} component={Transport} />
 
                 <Redirect from={"/"} to={"/instructors"} />
               </Switch>

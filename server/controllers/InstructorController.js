@@ -12,6 +12,16 @@ class InstructorController {
 
   }
 
+  async getOneInstructor(req, res) {
+    try {
+      const { id: _id } = req.params;
+      const instructor = await Instructor.findOne({ _id });
+      return res.json({ data: instructor });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при получении инструктора' });
+    }
+  }
+
   async addInstructor(req, res) {
     try {
 
@@ -33,6 +43,42 @@ class InstructorController {
       });
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при добавлении инструктора' });
+    }
+  }
+
+  async deleteInstructor(req, res) {
+    try {
+      const _id = req.params.id;
+      Instructor.findByIdAndDelete({ _id }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось удалить инструктора' })
+        }
+        return res.json(`Инструктор c номером ${document.instructorNumber} был удален`)
+      });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при удалении инструктора' })
+    }
+  }
+
+  async updateInstructor(req, res) {
+    try {
+      const instructor = req.body;
+
+      const isExists = await Instructor.exists({ instructorNumber: instructor.instructorNumber });
+
+      if (isExists) {
+        return res.status(400).json({ message: 'Инструктор с таким номером уже существует' });
+      }
+
+      Instructor.findByIdAndUpdate({ _id: instructor._id }, instructor, { new: true }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось обновить инструктора' })
+        }
+        return res.json(`Инструктор c номером ${document.instructorNumber} был обновлен`)
+      });
+
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при обновлении инструктор' })
     }
   }
 }

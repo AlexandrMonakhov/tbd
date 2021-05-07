@@ -12,6 +12,16 @@ class StudentController {
     }
   }
 
+  async getOneStudent(req, res) {
+    try {
+      const { id: _id } = req.params;
+      const sudent = await Student.findOne({ _id });
+      return res.json({ data: sudent });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при получении студента' });
+    }
+  }
+
   async addStudent(req, res) {
     try {
 
@@ -33,6 +43,45 @@ class StudentController {
 
     } catch (error) {
       return res.status(400).json({ message: 'Ошибка при добавлении студента' });
+    }
+  }
+
+  async deleteStudent(req, res) {
+
+    try {
+      const _id = req.params.id;
+      Student.findByIdAndDelete({ _id }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось удалить студента' });
+        }
+        return res.json(`Студент с номером ${document.studentNumber} была удалена`)
+      });
+
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при удалении студента' });
+    }
+
+  }
+
+  async updateStudent(req, res) {
+    try {
+      const student = req.body;
+
+      const isExists = await Student.exists({ studentNumber: student.studentNumber });
+
+      if (isExists) {
+        return res.status(400).json({ message: 'Студент с таким номером уже существует' });
+      }
+
+      Student.findByIdAndUpdate({ _id: student._id }, student, { new: true }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось обновить студента' })
+        }
+        return res.json(`Студент c номером ${document.studentNumber} был обновлен`)
+      });
+
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при обновлении студента' })
     }
   }
 

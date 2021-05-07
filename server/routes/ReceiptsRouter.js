@@ -7,6 +7,10 @@ ReceiptRouter.get('/getAll', ReceiptController.getAllReceipts);
 
 ReceiptRouter.post('/add', ReceiptController.addReceipt);
 
-ReceiptRouter.delete('/delete', ReceiptController.deleteReceipt);
+ReceiptRouter.get('/:id', ReceiptController.getOneReceipt);
+
+ReceiptRouter.delete('/:id', ReceiptController.deleteReceipt);
+
+ReceiptRouter.put('/', ReceiptController.updateReceipt);
 
 module.exports = ReceiptRouter;

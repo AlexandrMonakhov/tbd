@@ -11,6 +11,16 @@ class FileController {
     }
   }
 
+  async getOneFile(req, res) {
+    try {
+      const { id: _id } = req.params;
+      const file = await FileCab.findOne({ _id });
+      return res.json({ data: file });
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при получении картотеки' });
+    }
+  }
+
   async addFile(req, res) {
 
     try {
@@ -38,10 +48,10 @@ class FileController {
 
   async deleteFile(req, res) {
     try {
-      const _id = req.body.id;
+      const _id = req.params.id;
       FileCab.findByIdAndDelete({ _id }, (error, document) => {
         if (error) {
-          return res.status(400).json({ message: 'Не удалось удалить картотекe' })
+          return res.status(400).json({ message: 'Не удалось удалить картотеку' })
         }
         return res.json(`Картотека c номером ${document.fileNumber} была удалена`)
       });
@@ -50,8 +60,27 @@ class FileController {
     }
   }
 
+  async updateFile(req, res) {
+    try {
+      const file = req.body;
 
+      const isExists = await FileCab.exists({ fileNumber: file.fileNumber });
 
+      if (isExists) {
+        return res.status(400).json({ message: 'Картотека с таким номером уже существует' });
+      }
+
+      FileCab.findByIdAndUpdate({ _id: file._id }, file, { new: true }, (error, document) => {
+        if (error) {
+          return res.status(400).json({ message: 'Не удалось обновить картотеку' })
+        }
+        return res.json(`Картотека c номером ${document.fileNumber} был обновлен`)
+      });
+
+    } catch (error) {
+      return res.status(400).json({ message: 'Ошибка при обновлении картотеки' })
+    }
+  }
 }
 
 module.exports = new FileController();

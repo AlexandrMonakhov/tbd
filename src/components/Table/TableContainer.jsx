@@ -24,7 +24,12 @@ function TableContainer({ data = null, translate, headers, deleteAction }) {
                 <ActionCell id={item._id} key={i} deleteAction={deleteAction} />
               ) : (
                 <td key={i}>
-                  {key === "conclusionDate" ||
+                  {key === "practiceExam" ||
+                  key === "theoryExam" ||
+                  key === "paymentDate" ||
+                  key === "startDate" ||
+                  key === "endDate" ||
+                  key === "conclusionDate" ||
                   key === "createdAt" ||
                   key === "updatedAt"
                     ? moment(item[key]).format("DD.MM.YYYY")
