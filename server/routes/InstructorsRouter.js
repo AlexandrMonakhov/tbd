@@ -11,6 +11,6 @@ InstructorRouter.post('/add', InstructorController.addInstructor);
 
 InstructorRouter.delete('/:id', InstructorController.deleteInstructor);
 
-InstructorRouter.put('/', InstructorController.updateInstructor);
+InstructorRouter.put('/:id', InstructorController.updateInstructor);
 
 module.exports = InstructorRouter;

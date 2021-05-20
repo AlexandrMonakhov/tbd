@@ -51,7 +51,7 @@ export function deleteInstructor(id) {
 
 export function updateInstructor(data) {
     return api()
-        .put("instructor/", data)
+        .put(`instructor/${data._id}`, data)
 }
 
 /* Картотека */

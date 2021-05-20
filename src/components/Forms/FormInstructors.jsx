@@ -36,8 +36,14 @@ const FormInstructors = () => {
           history.push("/instructors");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     } else {
       addInstructor(data)
@@ -45,8 +51,14 @@ const FormInstructors = () => {
           history.push("/instructors");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     }
   };

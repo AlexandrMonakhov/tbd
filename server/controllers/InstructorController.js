@@ -62,15 +62,18 @@ class InstructorController {
 
   async updateInstructor(req, res) {
     try {
-      const instructor = req.body;
 
-      const isExists = await Instructor.exists({ instructorNumber: instructor.instructorNumber });
+      const id = req.params.id
+
+      const isExists = await Instructor.exists({ instructorNumber: req.body.instructorNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Инструктор с таким номером уже существует' });
+        let candidate = await Instructor.findOne({ instructorNumber: req.body.instructorNumber })
+        if (candidate._id != id) {
+          return res.status(400).json({ message: 'Инструктор с таким номером уже существует' });
+        }
       }
-
-      Instructor.findByIdAndUpdate({ _id: instructor._id }, instructor, { new: true }, (error, document) => {
+      Instructor.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить инструктора' })
         }
