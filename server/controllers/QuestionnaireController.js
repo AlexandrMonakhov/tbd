@@ -63,15 +63,18 @@ class QuestionnaireController {
 
   async updateQuestionnaire(req, res) {
     try {
-      const questionnaire = req.body;
+      const id = req.params.id;
 
-      const isExists = await Questionnaire.exists({ questionnaireNumber: questionnaire.questionnaireNumber });
+      const isExists = await Questionnaire.exists({ questionnaireNumber: req.body.questionnaireNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Анкета с таким номером уже существует' });
+        let questionnaire = await Questionnaire.findOne({ questionnaireNumber: req.body.questionnaireNumber });
+        if (questionnaire._id != id) {
+          return res.status(400).json({ message: 'Анкета с таким номером уже существует' });
+        }
       }
 
-      Questionnaire.findByIdAndUpdate({ _id: questionnaire._id }, questionnaire, { new: true }, (error, document) => {
+      Questionnaire.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить анкету' })
         }

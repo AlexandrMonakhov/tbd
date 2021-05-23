@@ -11,6 +11,6 @@ QuestionnaireRouter.get('/:id', QuestionnaireController.getOneQuestionnaire);
 
 QuestionnaireRouter.delete('/:id', QuestionnaireController.deleteQuestionnaire);
 
-QuestionnaireRouter.put('/', QuestionnaireController.updateQuestionnaire);
+QuestionnaireRouter.put('/:id', QuestionnaireController.updateQuestionnaire);
 
 module.exports = QuestionnaireRouter;

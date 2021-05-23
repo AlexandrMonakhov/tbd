@@ -11,6 +11,6 @@ ReceiptRouter.get('/:id', ReceiptController.getOneReceipt);
 
 ReceiptRouter.delete('/:id', ReceiptController.deleteReceipt);
 
-ReceiptRouter.put('/', ReceiptController.updateReceipt);
+ReceiptRouter.put('/:id', ReceiptController.updateReceipt);
 
 module.exports = ReceiptRouter;

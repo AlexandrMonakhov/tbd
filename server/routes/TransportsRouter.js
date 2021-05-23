@@ -11,6 +11,6 @@ TransportRouter.get('/:id', TransportController.getOneTransport);
 
 TransportRouter.delete('/:id', TransportController.deleteTransport);
 
-TransportRouter.put('/', TransportController.updateTransport);
+TransportRouter.put('/:id', TransportController.updateTransport);
 
 module.exports = TransportRouter;

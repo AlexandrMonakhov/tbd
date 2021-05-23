@@ -63,15 +63,20 @@ class TransportController {
 
   async updateTransport(req, res) {
     try {
-      const transport = req.body;
+      const id = req.params.id;
 
-      const isExists = await Transport.exists({ plateNumber: transport.plateNumber });
+      const isExists = await Transport.exists({ plateNumber: req.body.plateNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Транспорт с таким номером уже существует' });
+
+        let transport = await Transport.findOne({ plateNumber: req.body.plateNumber });
+
+        if (transport._id != id) {
+          return res.status(400).json({ message: 'Транспорт с таким номером уже существует' });
+        }
       }
 
-      Transport.findByIdAndUpdate({ _id: transport._id }, transport, { new: true }, (error, document) => {
+      Transport.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить транспорт' })
         }

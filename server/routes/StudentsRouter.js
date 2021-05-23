@@ -11,6 +11,6 @@ StudentRouter.get('/:id', StudentController.getOneStudent);
 
 StudentRouter.delete('/:id', StudentController.deleteStudent);
 
-StudentRouter.put('/', StudentController.updateStudent);
+StudentRouter.put('/:id', StudentController.updateStudent);
 
 module.exports = StudentRouter;

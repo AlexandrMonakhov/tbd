@@ -24,7 +24,7 @@ export function deleteContract(id) {
 
 export function updateContract(data) {
     return api()
-        .put("contract/", data)
+        .put(`contract/${data._id}`, data)
 }
 
 /* Инструкторы */
@@ -78,7 +78,7 @@ export function deleteFile(id) {
 
 export function updateFile(data) {
     return api()
-        .put("file/", data)
+        .put(`file/${data._id}`, data)
 }
 
 /* Анкеты */
@@ -105,7 +105,7 @@ export function deleteQuestionnaire(id) {
 
 export function updateQuestionnaire(data) {
     return api()
-        .put("questionnaire/", data)
+        .put(`questionnaire/${data._id}`, data)
 }
 
 /* Квитанции */
@@ -132,7 +132,7 @@ export function deleteReceipt(id) {
 
 export function updateReceipt(data) {
     return api()
-        .put("receipt/", data)
+        .put(`receipt/${data._id}`, data)
 }
 
 /* Студенты */
@@ -159,7 +159,7 @@ export function deleteStudent(id) {
 
 export function updateStudent(data) {
     return api()
-        .put("student/", data)
+        .put(`student/${data._id}`, data)
 }
 
 /* Транспорт */
@@ -186,5 +186,5 @@ export function deleteTransport(id) {
 
 export function updateTransport(data) {
     return api()
-        .put("transport/", data)
+        .put(`transport/${data._id}`, data)
 }

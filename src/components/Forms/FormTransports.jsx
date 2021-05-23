@@ -33,8 +33,14 @@ const FormTransports = () => {
           history.push("/transports");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     } else {
       addTransport(data)
@@ -42,8 +48,14 @@ const FormTransports = () => {
           history.push("/transports");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     }
   };

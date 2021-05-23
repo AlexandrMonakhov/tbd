@@ -64,15 +64,19 @@ class ReceiptController {
 
   async updateReceipt(req, res) {
     try {
-      const receipt = req.body;
+      const id = req.params.id;
 
-      const isExists = await Receipt.exists({ receiptNumber: receipt.receiptNumber });
+      const isExists = await Receipt.exists({ receiptNumber: req.body.receiptNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Квитанция с таким номером уже существует' });
+        let receipt = await Receipt.findOne({ receiptNumber: req.body.receiptNumber });
+
+        if (receipt._id != id) {
+          return res.status(400).json({ message: 'Квитанция с таким номером уже существует' });
+        }
       }
 
-      Receipt.findByIdAndUpdate({ _id: receipt._id }, receipt, { new: true }, (error, document) => {
+      Receipt.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить квитанцию' })
         }

@@ -12,6 +12,6 @@ FileRouter.post('/add', FileController.addFile);
 
 FileRouter.delete('/:id', FileController.deleteFile);
 
-FileRouter.put('/', FileController.updateFile);
+FileRouter.put('/:id', FileController.updateFile);
 
 module.exports = FileRouter;

@@ -62,15 +62,19 @@ class FileController {
 
   async updateFile(req, res) {
     try {
-      const file = req.body;
+      const id = req.params.id;
 
-      const isExists = await FileCab.exists({ fileNumber: file.fileNumber });
+      const isExists = await FileCab.exists({ fileNumber: req.body.fileNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Картотека с таким номером уже существует' });
+        let file = await FileCab.findOne({ fileNumber: req.body.fileNumber });
+
+        if (file._id != id) {
+          return res.status(400).json({ message: 'Картотека с таким номером уже существует' });
+        }
       }
 
-      FileCab.findByIdAndUpdate({ _id: file._id }, file, { new: true }, (error, document) => {
+      FileCab.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить картотеку' })
         }

@@ -36,8 +36,14 @@ const FormQuestionnaire = () => {
           history.push("/questionnaires");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     } else {
       addQuestionnaire(data)
@@ -45,8 +51,14 @@ const FormQuestionnaire = () => {
           history.push("/questionnaires");
           console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((e) => {
+          let str = "";
+          if (e.response) {
+            str = e.response.data.message;
+          } else {
+            str = e.message;
+          }
+          console.error(str);
         });
     }
   };

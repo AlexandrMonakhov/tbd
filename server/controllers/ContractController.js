@@ -61,15 +61,19 @@ class ContractController {
 
   async updateContract(req, res) {
     try {
-      const contract = req.body;
+      const id = req.params.id;
 
-      const isExists = await Contract.exists({ contractNumber: contract.contractNumber });
+      const isExists = await Contract.exists({ contractNumber: req.body.contractNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Договор с таким номером уже существует' });
+        let contract = await Contract.findOne({ contractNumber: req.body.contractNumber });
+
+        if (contract._id != id) {
+          return res.status(400).json({ message: 'Договор с таким номером уже существует' });
+        }
       }
 
-      Contract.findByIdAndUpdate({ _id: contract._id }, contract, { new: true }, (error, document) => {
+      Contract.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить договор' })
         }

@@ -11,6 +11,6 @@ ContractRouter.post('/add', ContractController.addContract);
 
 ContractRouter.delete('/:id', ContractController.deleteContract);
 
-ContractRouter.put('/', ContractController.updateContract);
+ContractRouter.put('/:id', ContractController.updateContract);
 
 module.exports = ContractRouter;

@@ -65,15 +65,20 @@ class StudentController {
 
   async updateStudent(req, res) {
     try {
-      const student = req.body;
+      const id = req.params.id;
 
-      const isExists = await Student.exists({ studentNumber: student.studentNumber });
+      const isExists = await Student.exists({ studentNumber: req.body.studentNumber });
 
       if (isExists) {
-        return res.status(400).json({ message: 'Студент с таким номером уже существует' });
+
+        let student = await Student.findOne({ studentNumber: req.body.studentNumber });
+
+        if (student._id != id) {
+          return res.status(400).json({ message: 'Студент с таким номером уже существует' });
+        }
       }
 
-      Student.findByIdAndUpdate({ _id: student._id }, student, { new: true }, (error, document) => {
+      Student.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (error, document) => {
         if (error) {
           return res.status(400).json({ message: 'Не удалось обновить студента' })
         }
@@ -81,6 +86,7 @@ class StudentController {
       });
 
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ message: 'Ошибка при обновлении студента' })
     }
   }
